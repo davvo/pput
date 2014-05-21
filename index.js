@@ -37,8 +37,8 @@ var argv = parseArgs(process.argv.slice(2));
 var files = walks(argv._, argv.prefix || '');
 
 var s3 = knox.createClient({
-    key: 'AKIAIUMV523W6WT3ECDA', 
-    secret: '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',
+    key: argv.key || process.env.AWS_KEY, 
+    secret: argv.secret || process.env.AWS_SECRET,
     bucket: argv.bucket || 'oblique',
     region: 'eu-west-1',
     secure: false,

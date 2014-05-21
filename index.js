@@ -53,11 +53,15 @@ var workers = argv.workers || 100,
 
 function putNext(task) {
     if (!task) {
-        var next = files.next();
-        if (next.done) {
+        try {
+            var next = files.next();
+            if (next.done) {
+                return done++;
+            }
+            task = next.value;
+        } catch (x) {
             return done++;
         }
-        task = next.value;
     }
     fs.readFile(task.file, function (err, data) {
         if (err) {

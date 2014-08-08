@@ -24,6 +24,9 @@ function *walk(file, dirname, prefix) {
         if (prefix) {
             key = path.join(prefix, key);
         }
+	if (folder) {
+	    key = path.join(folder, key);
+	}
         yield {
             file: file,
             key: key,
@@ -46,6 +49,7 @@ var s3 = knox.createClient({
 });
 
 var workers = argv.workers || 100,
+    folder = argv.folder,
     done = 0,
     bytesSent = 0,
     filesSent = 0,
@@ -53,11 +57,15 @@ var workers = argv.workers || 100,
 
 function putNext(task) {
     if (!task) {
-        var next = files.next();
-        if (next.done) {
+        try {
+            var next = files.next();
+            if (next.done) {
+                return done++;
+            }
+            task = next.value;
+        } catch (x) {
             return done++;
         }
-        task = next.value;
     }
     fs.readFile(task.file, function (err, data) {
         if (err) {

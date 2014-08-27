@@ -1,13 +1,13 @@
 {
   "name": "put",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Parallel put to s3",
-  "main": "index.js",
+  "main": "put.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "davvo",
+  "license": "MIT",
   "dependencies": {
     "async": "^0.9.0",
     "knox": "^0.8.10",

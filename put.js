@@ -42,8 +42,8 @@ var files = walks(argv._, argv.prefix || '');
 var s3 = knox.createClient({
     key: argv.key || process.env.AWS_KEY, 
     secret: argv.secret || process.env.AWS_SECRET,
-    bucket: argv.bucket || 'oblique',
-    region: 'eu-west-1',
+    bucket: argv.bucket,
+    region: argv.region || 'eu-west-1',
     secure: false,
     agent: false
 });

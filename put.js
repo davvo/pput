@@ -9,7 +9,7 @@ function *walks(files, prefix) {
     }
 }
 
-function *walk(file, dirname, prefix) {    
+function *walk(file, dirname, prefix) {
     var stat = fs.statSync(file);
     if (stat.isDirectory()) {
         var files = fs.readdirSync(file);
@@ -40,7 +40,7 @@ var argv = parseArgs(process.argv.slice(2));
 var files = walks(argv._, argv.prefix || '');
 
 var s3 = knox.createClient({
-    key: argv.key || process.env.AWS_KEY, 
+    key: argv.key || process.env.AWS_KEY,
     secret: argv.secret || process.env.AWS_SECRET,
     bucket: argv.bucket,
     region: argv.region || 'eu-west-1',
@@ -81,9 +81,14 @@ function putNext(task) {
         });
         req.on('response', function(res) {
             res.resume();
-            filesSent++;
-            bytesSent += task.stat.size;
-            putNext();
+            if (res.statusCode !== 200) {
+                console.error("%d - Retrying %s", req.statusCode, task.file);
+                putNext(task);
+            } else {
+                filesSent++;
+                bytesSent += task.stat.size;
+                putNext();
+            }
         });
         req.end(data);
     });

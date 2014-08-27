@@ -9,6 +9,10 @@
   "bin": {
     "pput": "./pput.sh"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davvo/pput.git"
+  },
   "author": "davvo",
   "license": "MIT",
   "dependencies": {

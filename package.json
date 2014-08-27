@@ -1,6 +1,6 @@
 {
   "name": "pput",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Parallel put to s3",
   "main": "pput.js",
   "scripts": {
